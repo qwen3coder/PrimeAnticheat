@@ -1,3 +1,8 @@
 target/
 .tools/
 *.iml
+build.bat
+.idea/
+docs/
+server/
+.gitignore
