@@ -1,0 +1,95 @@
+# ================= PrimeAnticheat messages.yml =================
+# Palette: primary &#58A8FF | accent &#007AFF | + &#00FF00 | - &#F43F5E | text &#94A3B8
+# Prefix and " » " separator are prepended by code (configs.prefixLine),
+# don't write them into templates.
+prefix: "&#0079FFP&#0A7EFFr&#1484FFi&#1D89FFm&#278EFFe"
+
+no-permission: "&#F43F5ENo permission."
+player-only: "&#F43F5EOnly players."
+player-not-found: "&#F43F5EPlayer not found: &#58A8FF{PLAYER}"
+unknown-command: "&#F43F5EUnknown command: &#58A8FF{ARGS}"
+reloaded: "&#00FF00Configuration reloaded."
+
+# %player% %score% %vl% (legacy flag format, kept for compatibility)
+flag-alert: "&#58A8FF%player% &#94A3B8flagged &#007AFFAim &#94A3B8(score: &#58A8FF%score% &#94A3B8| VL: &#58A8FF%vl%)"
+kick-reason: "&#007AFFPrimeAnticheat\n&#94A3B8Suspicious aim (ML score: &#58A8FF{SCORE})"
+
+# ================= Alerts ({PLAYER} {PROBABILITY} {BUFFER} {VL}) =================
+alert-format-vl: "&#58A8FF{PLAYER} &#94A3B8failed &#007AFF{CHECK} &#94A3B8(prob &#58A8FF{PROBABILITY}&#94A3B8, buf &#58A8FF{BUFFER}&#94A3B8, VL &#58A8FF{VL}&#94A3B8){DETAILS}"
+packet-flag: "&#58A8FF{PLAYER} &#94A3B8failed &#007AFF{CHECK} &#94A3B8(VL &#58A8FF{VL}&#94A3B8){DETAILS}"
+alerts-enabled: "&#94A3B8Alerts: &#00FF00ON"
+alerts-disabled: "&#94A3B8Alerts: &#F43F5EOFF"
+
+probs-enabled: "&#94A3B8Probs debug: &#00FF00ON"
+probs-disabled: "&#94A3B8Probs debug: &#F43F5EOFF"
+probs-history: "&#58A8FF{PLAYER} &#94A3B8probs: {HISTORY}"
+
+holo-enabled: "&#94A3B8Holograms: &#00FF00ON"
+holo-disabled: "&#94A3B8Holograms: &#F43F5EOFF"
+
+monitor-started: "&#94A3B8Monitoring: &#58A8FF{PLAYER}"
+monitor-stopped: "&#94A3B8Monitoring stopped."
+
+# ================= DataCollector (/pac datacollect ...) =================
+usage-header: "&#58A8FFCommands:"
+usage-datacollect: "&#94A3B8/pac datacollect <start|stop|status|restore>"
+usage-collect-start: "&#94A3B8/pac datacollect start <nick> <CHEAT|LEGIT|UNLABELED> \"<comment>\""
+usage-collect-stop: "&#94A3B8/pac datacollect stop <nick|all>"
+usage-collect-status: "&#94A3B8/pac datacollect status"
+usage-collect-restore: "&#94A3B8/pac datacollect restore <nick>"
+usage-alerts: "&#94A3B8/pac alerts"
+usage-monitor: "&#94A3B8/pac monitor <nick>"
+usage-probs: "&#94A3B8/pac probs"
+usage-holo: "&#94A3B8/pac holo"
+usage-executecommand: "&#94A3B8/pac executecommand <command...>"
+usage-status: "&#94A3B8/pac status"
+usage-violators: "&#94A3B8/pac violators"
+usage-ipinfo: "&#94A3B8/pac ipinfo <nick|ip>"
+
+ipinfo-checking: "&#94A3B8Looking up &#58A8FF{IP}&#94A3B8..."
+ipinfo-local: "&#94A3B8Local address, lookup skipped."
+ipinfo-disabled: "&#F43F5EIP lookup is disabled in config.yml."
+ipinfo-error: "&#F43F5ELookup failed: &#58A8FF{ERROR}"
+ipinfo-header: "&#58A8FF{NAME} &#94A3B8({IP})"
+ipinfo-geo: "&#94A3B8Geo: &#58A8FF{COUNTRY}, {REGION}, {CITY} {ZIP}"
+ipinfo-isp: "&#94A3B8ISP: &#58A8FF{ISP} &#94A3B8| Org: &#58A8FF{ORG}"
+ipinfo-net: "&#94A3B8AS: &#58A8FF{AS} &#94A3B8| TZ: &#58A8FF{TZ}"
+ipinfo-vpn-yes: "&#94A3B8VPN/Proxy: &#F43F5EYES &#94A3B8({REASON})"
+ipinfo-vpn-no: "&#94A3B8VPN/Proxy: &#00FF00no"
+ipinfo-source: "&#94A3B8Source: &#58A8FF{SOURCE}"
+ipinfo-asn-blocked: "&#F43F5EBlocked: blacklisted network &#94A3B8(ASN &#58A8FF{ASN}&#94A3B8, {ORG})"
+ipinfo-asn-denied: "&#58A8FF{PLAYER} &#94A3B8blocked at login &#94A3B8(blacklisted ASN &#58A8FF{ASN}&#94A3B8)"
+
+violators-title: "Violators"
+violators-empty: "&#94A3B8No violators online right now."
+usage-link: "&#94A3B8/pac link token <API_KEY>"
+usage-link-token: "&#94A3B8/pac link token <API_KEY>"
+usage-reload: "&#94A3B8/pac reload"
+
+session-started: "&#00FF00Started &#58A8FF{LABEL} &#00FF00session."
+session-stopped: "&#F43F5EStopped session for &#58A8FF{PLAYER}"
+session-save-fail: "&#F43F5ESave failed, error."
+all-sessions-stopped: "&#F43F5EStopped &#58A8FF{COUNT} &#F43F5Esessions."
+no-sessions-to-stop: "&#F43F5ENo active sessions to stop."
+invalid-label: "&#F43F5EBad label: &#58A8FF{LABEL}"
+valid-labels: "&#94A3B8Available: &#F43F5ECHEAT&#94A3B8, &#00FF00LEGIT&#94A3B8, &#94A3B8UNLABELED"
+
+data-status-header: "&#58A8FFData status:"
+active-sessions: "&#94A3B8Active sessions: &#58A8FF{COUNT}"
+no-active-sessions: "&#F43F5ENo active sessions."
+start-hint: "&#94A3B8Use /pac datacollect start <nick> <CHEAT|LEGIT|UNLABELED>"
+
+restore-usage: "&#94A3B8Usage: &#58A8FF/pac datacollect restore <nick>"
+restore-success: "&#00FF00Ticks saved to &#58A8FFrestored_data/"
+restore-fail: "&#F43F5ESave failed, error."
+restore-no-data: "&#F43F5ESave failed, no buffer."
+
+executecommand-success: "&#00FF00Executed: &#58A8FF{COMMAND}"
+executecommand-unknown: "&#F43F5EUnknown command: &#58A8FF{COMMAND}"
+executecommand-fail: "&#F43F5EError: &#58A8FF{ERROR}"
+
+status-api: "&#94A3B8API: {STATE}"
+status-server: "&#94A3B8Server: &#58A8FF{URL}"
+status-traffic: "&#94A3B8Sent: &#58A8FF{SENT} &#94A3B8| Received: &#58A8FF{RECEIVED}"
+token-usage: "&#94A3B8/pac link token <API_KEY>"
+token-saved: "&#00FF00API key &#58A8FF{KEY} &#00FF00saved to config.yml!"

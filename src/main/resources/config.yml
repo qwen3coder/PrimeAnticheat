@@ -1,0 +1,167 @@
+prefix: "&#0079FFP&#0A7EFFr&#1484FFi&#1D89FFm&#278EFFe"
+
+# Schema version. Bump on every defaults change: on start/reload an older
+# file is auto-updated (text merge: only missing lines are added with their
+# comments; existing lines, comments, styles and ladders stay byte-identical;
+# backup to backups/, console report).
+config-version: 1
+
+debug: false
+
+# --- ML (window/timers; the model itself is cloud-only, see inference) ---
+ml:
+  enabled: true
+  # How often (in ticks) the async sender checks window readiness
+  check-period-ticks: 10
+
+# --- Cloud inference ---
+inference:
+  url: "wss://api.primeac.pw/ws"
+  token: ""
+  debug: false
+  # Single request timeout in seconds (a hanging request is dropped and resets the gate)
+  timeout-sec: 30
+
+# --- Aim window and buffer ---
+ai:
+  # Rotation ticks per model window (5-200)
+  sequence: 120
+  # Send at most once per step rotations
+  step: 30
+  # How long (ms) after a hit the player counts as in combat (requests only in combat)
+  combat-time-ms: 5000
+  # Probability above: buffer grows, below decrease-threshold: buffer decays
+  alert-threshold: 0.7
+  buffer:
+    # Flag at buffer >= flag, buffer reset after flag
+    flag: 80.0
+    reset-on-flag: 40.0
+    # Growth: (p - threshold) * multiplier
+    multiplier: 90.0
+    # Decay per answer (scaled by model confidence)
+    decrease: 8
+    decrease-threshold: 0.4
+  # Reduce damage dealt by a player after N consecutive high AI scores.
+  damage-reduction:
+    enabled: true
+    # Probability above which a score counts toward the streak
+    threshold: 0.8
+    # How many scores in a row above threshold before damage is cut
+    consecutive: 5
+    # Multiplier applied to outgoing damage (0.0 = no damage, 1.0 = normal)
+    multiplier: 0.4
+    # How long (ms) the reduction lasts once triggered
+    duration-ms: 1500
+
+checks:
+  aim:
+    enabled: true
+    # Punishment ladder VL -> console command.
+    # The command of the highest threshold <= current VL wins.
+    # Placeholders: %player% %score% {VL} {BUFFER} {PROBABILITY}
+    punishments:
+      3: "kick %player% &#F43F5EKillAura"
+      6: "ban %player% &#F43F5EKillAura"
+
+  crystala:
+    enabled: true
+    cooldown_ms: 0
+    punishments:
+      999: "ban %player% &#F43F5ECrystalAura"
+  crystalb:
+    enabled: true
+    window_ms: 300
+    max_actions: 5
+    cooldown_ms: 0
+    punishments:
+      999: "kick %player% &#F43F5ECrystalAura"
+      1000: "ban %player% &#F43F5ECrystalAura"
+  crystalc:
+    enabled: true
+    window: 7
+    max_spread_ms: 55
+    max_mean_ms: 600
+    cooldown_ms: 0
+    punishments:
+      999: "kick %player% &#F43F5ECrystalAura"
+      1000: "ban %player% &#F43F5ECrystalAura"
+  crystale:
+    enabled: true
+    swing_match_ms: 150
+    max_unswung: 3
+    cooldown_ms: 0
+    punishments:
+      999: "kick %player% &#F43F5ECrystalAura"
+      1000: "ban %player% &#F43F5ECrystalAura"
+
+holograms:
+  # How often (in ticks) hologram position and text refresh (1 = every tick)
+  update-period-ticks: 3
+
+# IP geolocation + VPN/Proxy check (/pac ipinfo).
+# Checked ONCE at login (AsyncPlayerPreLoginEvent, cached for the whole
+# session until quit) and on command. Never re-checked mid-session.
+# Without a token (default, fully free): ip-api.com (~45 req/min, HTTP)
+# with fallback to ipwho.is (HTTPS, geo only).
+# With a token (optional upgrade): ipinfo.io full lookup over HTTPS -
+# organization (Hetzner, DigitalOcean, AWS, ...), ASN type and privacy
+# flags (VPN/proxy/Tor/hosting + service name). Free account: 50k req/month.
+#
+# Guide (2 minutes):
+#   1. Sign up at https://ipinfo.io/signup (email only, free tier is enough).
+#   2. Copy the token from https://ipinfo.io/account/token
+#      (dashboard -> your token, e.g. "a1b2c3d4e5f6...").
+#   3. Paste it below, then run /pac reload (no restart needed).
+# Leave empty ("") to stay on the free keyless chain.
+ipinfo:
+  enabled: true
+  token: ""
+  # Resolve the IP at login so /pac ipinfo answers instantly without a request.
+  # Off = lookup only when the command runs. The ASN blacklist below works
+  # regardless (it always checks at login).
+  check-on-join: true
+  # Single lookup timeout in seconds (login check runs async, join never hangs)
+  timeout-sec: 5
+  # How long one IP result is cached (raw-IP lookups, repeat joins)
+  cache-minutes: 60
+  # ASN blacklist: checked once at login, match = join fully cancelled with
+  # ipinfo-asn-blocked from messages.yml. Entries match the ASN ("AS24940")
+  # or the provider name ("Hetzner", "DigitalOcean") in AS/Org/ISP.
+  # Empty = no blocking. Fail-open: lookup errors never block anyone.
+  asn-blacklist: []
+
+alerts:
+  console: true
+  sound:
+    enabled: true
+    type: BLOCK_NOTE_BLOCK_PLING
+    volume: 1.0
+    pitch: 1.0
+
+violation:
+  # Punishment sender name (seen in logs/plugins instead of CONSOLE).
+  # Any colors + %prefix% (= anticheat prefix by default).
+  sender-name: "%prefix%"
+  # Cooldown between destructive punishments (kick/ban/...) of one player
+  punishment-cooldown-sec: 5
+  # Ladder commands run as the custom named sender; off = plain console
+  # (some commands check for the real console explicitly).
+  custom-executor: false
+  vl-decay:
+    enabled: true
+    interval-sec: 300
+    amount: 1
+
+# Instant lockout: each flag from these checks blocks crystal actions
+# (place or break) for lockout_ms. Names are case-insensitive.
+mitigation:
+  enabled: true
+  lockout_ms: 1500
+  checks:
+    - CrystalA
+    - CrystalB
+    - CrystalC
+
+# Bypass permission (skip checks for the player). "none" = disable the check
+# (otherwise OPs pass every permission check and always bypass).
+bypass-permission: "primeanticheat.bypass"

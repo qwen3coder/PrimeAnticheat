@@ -1,0 +1,59 @@
+name: PrimeAnticheat
+version: 0.1.0-SNAPSHOT
+main: ru.prime.anticheat.PrimeAnticheat
+api-version: '1.13'
+author: Prime
+description: ML Minecraft anti-cheat (PacketEvents based)
+depend:
+  - packetevents
+commands:
+  primeanticheat:
+    description: PrimeAnticheat server protection
+    aliases: [pac, primeac]
+    usage: /<command> <args>
+    permission: primeanticheat.command
+    permission-message: Unknown command. Type "/help" for help.
+permissions:
+  primeanticheat.command:
+    description: See and use /pac at all (granted automatically with any staff node)
+    default: false
+permissions:
+  primeanticheat.admin:
+    description: Full access to every subcommand
+    default: op
+  primeanticheat.alerts:
+    description: Receive flag alerts, toggle /pac alerts
+    default: op
+  primeanticheat.monitor:
+    description: Live player tracking via /pac monitor
+    default: op
+  primeanticheat.probs:
+    description: Probability history debug via /pac probs
+    default: op
+  primeanticheat.holo:
+    description: Probability holograms via /pac holo
+    default: op
+  primeanticheat.status:
+    description: API link status via /pac status
+    default: op
+  primeanticheat.violators:
+    description: Violators leaderboard via /pac violators
+    default: op
+  primeanticheat.ipinfo:
+    description: IP geolocation and VPN check via /pac ipinfo
+    default: op
+  primeanticheat.datacollect:
+    description: Dataset collection via /pac datacollect
+    default: op
+  primeanticheat.link:
+    description: Bind the server via /pac link token
+    default: op
+  primeanticheat.execute:
+    description: Run console commands via /pac executecommand
+    default: op
+  primeanticheat.reload:
+    description: Reload configs via /pac reload
+    default: op
+  primeanticheat.bypass:
+    description: Player is never checked
+    default: op
